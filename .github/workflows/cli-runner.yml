@@ -1,7 +1,7 @@
 name: Copilot CLI Runner
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       prompt:
         description: Cadena de texto que se pasará a Copilot
