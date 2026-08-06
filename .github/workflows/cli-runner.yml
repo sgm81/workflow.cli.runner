@@ -2,19 +2,22 @@ name: 'Copilot Chiste'
 on: [workflow_dispatch]
 
 permissions:
+  contents: read
   copilot-requests: write
 
 jobs:
   copilot:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@v5
 
       - name: 'Run Copilot CLI'
         uses: smg81/workflow.cli.runner@v1
-        env:
-          API_KEY: ${{ secrets.GH_TOKEN }}
         with:
           prompt: |
             Tell me a joke about programming in Spanish.
+          copilot-token: ${{ github.token }}
+          repo-token: ${{ github.token }}
+          fail-on-error: true
