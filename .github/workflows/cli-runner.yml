@@ -1,80 +1,20 @@
-name: Copilot CLI Runner
+name: 'Copilot Chiste'
+on: [workflow_dispatch]
 
-on:
-  workflow_dispatch:
-    inputs:
-      prompt:
-        description: Cadena de texto que se pasará a Copilot
-        required: true
-        type: string
-
-      model:
-        description: Modelo de IA
-        required: false
-        default: gpt-5
-        type: string
-
-      output-file:
-        description: Fichero donde guardar la respuesta
-        required: false
-        default: copilot-output.md
-        type: string
-
-    secrets:
-      github-token:
-        required: true
+permissions:
+  copilot-requests: write
 
 jobs:
   copilot:
     runs-on: ubuntu-latest
-
-    outputs:
-      response: ${{ steps.run.outputs.response }}
-
     steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v5
 
-      - uses: actions/checkout@v4
-
-      - name: Install GitHub CLI
-        run: |
-          type -p curl >/dev/null || sudo apt-get update
-          sudo apt-get install -y gh
-
-      - name: Authenticate GH CLI
+      - name: 'Run Copilot CLI'
+        uses: smg81/copilot-cli@v1
         env:
-          GH_TOKEN: ${{ secrets.github-token }}
-        run: |
-          echo "$GH_TOKEN" | gh auth login --with-token
-          gh auth status
-
-      - name: Install Copilot extension
-        run: |
-          gh extension install github/gh-copilot || true
-
-      - name: Execute prompt
-        id: run
-        env:
-          GH_TOKEN: ${{ secrets.github-token }}
-        run: |
-
-          RESPONSE=$(
-            gh copilot suggest \
-              --model "${{ inputs.model }}" \
-              "${{ inputs.prompt }}"
-          )
-
-          echo "$RESPONSE"
-
-          echo "$RESPONSE" > "${{ inputs.output-file }}"
-
-          {
-            echo "response<<EOF"
-            echo "$RESPONSE"
-            echo EOF
-          } 
-
-      - name: Upload result
-        uses: actions/upload-artifact@v4
+          API_KEY: ${{ secrets.GH_TOKEN }}
         with:
-          name: copilot-response
-          path: ${{ inputs.output-file }}
+          prompt: |
+            Tell me a joke about programming in Spanish.
