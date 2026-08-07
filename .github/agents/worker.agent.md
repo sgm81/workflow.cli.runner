@@ -1,5 +1,6 @@
 ---
 name: worker
+description: worker del proceso
 ---
 
 You are a worker agent.
