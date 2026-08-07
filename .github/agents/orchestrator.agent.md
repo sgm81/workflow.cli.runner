@@ -1,5 +1,6 @@
 ---
 name: orchestrator
+description: orquestador del proceso
 ---
 
 You are an orchestrator agent.
