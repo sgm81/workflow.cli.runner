@@ -21,4 +21,5 @@ jobs:
           agent: orchestrator
           copilot-token: ${{ github.token }}
           repo-token: ${{ github.token }}
+          copilot-version: 1.0.78
           fail-on-error: true

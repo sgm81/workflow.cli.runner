@@ -187,6 +187,10 @@ runs:
     - uses: actions/setup-node@v6
       with:
         node-version: '22'
+    - uses: actions/cache@v4
+      with:
+        path: ~/.npm
+        key: npm-${{ runner.os }}-node22-copilot-${{ inputs.copilot-version }}
     - name: Run GitHub Copilot CLI
       id: copilot
       shell: bash
@@ -194,13 +198,7 @@ runs:
         # Script
 
         echo "::group::Install GitHub Copilot CLI"
-        if [ "$COPILOT_VERSION" = "latest" ]; then
-          npm install -g @github/copilot
-        elif [ "$COPILOT_VERSION" = "prerelease" ]; then
-          npm install -g @github/copilot@prerelease
-        else
-          npm install -g @github/copilot@$COPILOT_VERSION
-        fi
+        npm install -g @github/copilot@$COPILOT_VERSION
         echo "CLI Version: $(copilot --version)"
         echo "::endgroup::"
 
