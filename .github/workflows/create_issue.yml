@@ -16,5 +16,3 @@ jobs:
           gh issue create \
             --title "Hello World" \
             --body "Hello World 🚀"
-        env:
-          GH_TOKEN: ${{ github.token }}
