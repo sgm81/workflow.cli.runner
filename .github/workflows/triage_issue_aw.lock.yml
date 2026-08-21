@@ -47,13 +47,9 @@
 #   - ghcr.io/github/github-mcp-server:v1.1.2@sha256:30197479d8036c7811892bc07e06f9a05c9ef3cdd79bc59f256d50647f95788c
 
 name: "Issue Triage Assistant"
-on:
-  issues:
-    types:
-    - opened
-    - edited
 
-permissions: {}
+on:
+  workflow_call:
 
 concurrency:
   group: "gh-aw-${{ github.workflow }}-${{ github.event.issue.number || github.run_id }}"
