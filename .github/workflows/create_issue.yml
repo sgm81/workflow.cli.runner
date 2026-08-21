@@ -3,11 +3,12 @@ name: Create Hello World Issue
 on:
   workflow_call:
 
-permissions:
-  issues: write
+
 
 jobs:
   create-issue:
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
 
     steps:
