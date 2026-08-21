@@ -70,8 +70,6 @@ on:
       GH_AW_GITHUB_TOKEN:
         required: false
 
-permissions: {}
-
 concurrency:
   group: "gh-aw-${{ github.workflow }}"
 
